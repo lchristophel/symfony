@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+// use App\Repository\CategoryRepository;
+use App\Entity\Article;
+use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -37,11 +40,14 @@ class Category
     /**
      * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="category")
      */
-    private $yes;
+    private $article;
 
-    public function __construct()
+    private $repoCategory;
+
+    public function __construct(ArticleRepository $repoArticle, CategoryRepository $repoCategory)
     {
-        $this->yes = new ArrayCollection();
+        $this->repoArticle = $repoArticle;
+        $this->repoCategory = $repoCategory;
     }
 
     public function getId(): ?int
@@ -66,6 +72,11 @@ class Category
         return $this->description;
     }
 
+    // public function getArticle(): ?string
+    // {
+    //     return $this->article;
+    // }
+
     public function setDescription(?string $description): self
     {
         $this->description = $description;
@@ -88,25 +99,25 @@ class Category
     /**
      * @return Collection<int, Article>
      */
-    public function getYes(): Collection
+    public function getArticles(): Collection
     {
-        return $this->yes;
+        return $this->article;
     }
 
-    public function addYe(Article $ye): self
+    public function addArticle(Article $article): self
     {
-        if (!$this->yes->contains($ye)) {
-            $this->yes[] = $ye;
-            $ye->addCategory($this);
+        if (!$this->article->contains($article)) {
+            $this->article[] = $article;
+            $article->addCategory($this);
         }
 
         return $this;
     }
 
-    public function removeYe(Article $ye): self
+    public function removeArticle(Article $article): self
     {
-        if ($this->yes->removeElement($ye)) {
-            $ye->removeCategory($this);
+        if ($this->article->removeElement($article)) {
+            $article->removeCategory($this);
         }
 
         return $this;

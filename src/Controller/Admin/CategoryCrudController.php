@@ -21,11 +21,9 @@ class CategoryCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('username'),
-            TextField::new('firstname'),
-            TextField::new('lastname'),
-            TextField::new('email'),
-            TextField::new('password')->hideOnIndex(),
+            TextField::new('title'),
+            TextEditorField::new('description'),
+            ImageField::new('image')->setUploadDir("/public/images/category")->setBasePath("/images/category")->setRequired(false),
         ];
     }
     

@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+// use App\Repository\ArticleRepository;
+use App\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -77,7 +79,7 @@ class Article
     {
         return $this->content;
     }
-
+    
     public function setContent(string $content): self
     {
         $this->content = $content;
